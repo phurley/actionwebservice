@@ -31,10 +31,10 @@ begin
   require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'
-  gem 'activesupport', '~> 3.0.3'
-  gem 'actionpack', '~> 3.0.3'
-  gem 'activerecord', '~> 3.0.3'
-  gem 'activesupport', '~> 3.0.3'
+  gem 'activesupport', '3.0.1'
+  gem 'actionpack', '3.0.1'
+  gem 'activerecord', '3.0.1'
+  gem 'activesupport', '3.0.1'
 end
 
 $:.unshift(File.dirname(__FILE__) + "/action_web_service/vendor/")
@@ -52,7 +52,10 @@ require 'action_web_service/protocol'
 require 'action_web_service/dispatcher'
 require 'action_web_service/scaffolding'
 
-ApplicationController.class_eval do
+ActionWebService::Base.send :include, ActionWebService::Container::Direct
+ActionWebService::Base.send :include, ActionWebService::Invocation
+
+ActionController::Base.class_eval do
   include ActionWebService::Protocol::Discovery
   include ActionWebService::Protocol::Soap
   include ActionWebService::Protocol::XmlRpc
