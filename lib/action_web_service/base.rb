@@ -1,3 +1,6 @@
+require 'action_web_service/invocation'
+require 'action_web_service/container'
+
 module ActionWebService # :nodoc:
   class ActionWebServiceError < StandardError # :nodoc:
   end
