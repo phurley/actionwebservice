@@ -31,6 +31,9 @@ module ActionWebService # :nodoc:
   #     member :email,     :string
   #   end
   class Base
+    include ActionWebService::Container::Direct
+    include ActionWebService::Invocation
+    
     # Whether to report exceptions back to the caller in the protocol's exception
     # format
     class_inheritable_option :web_service_exception_reporting, true

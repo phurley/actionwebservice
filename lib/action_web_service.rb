@@ -52,12 +52,7 @@ require 'action_web_service/protocol'
 require 'action_web_service/dispatcher'
 require 'action_web_service/scaffolding'
 
-ActionWebService::Base.class_eval do
-  include ActionWebService::Container::Direct
-  include ActionWebService::Invocation
-end
-
-ActionController::Base.class_eval do
+ApplicationController.class_eval do
   include ActionWebService::Protocol::Discovery
   include ActionWebService::Protocol::Soap
   include ActionWebService::Protocol::XmlRpc
