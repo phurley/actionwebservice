@@ -4,3 +4,4 @@ actionwebservice_unittest.db
 *.gem
 *~
 .#*
+.rvmrc

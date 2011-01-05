@@ -33,7 +33,7 @@ Rake::TestTask.new { |t|
 SCHEMA_PATH = File.join(File.dirname(__FILE__), *%w(test fixtures db_definitions))
 
 desc 'Build the MySQL test database'
-task :build_database do 
+task :build_database do
   %x( mysqladmin -uroot create actionwebservice_unittest )
   %x( mysql -uroot actionwebservice_unittest < #{File.join(SCHEMA_PATH, 'mysql.sql')} )
 end
@@ -79,8 +79,8 @@ spec = Gem::Specification.new do |s|
   s.rubyforge_project = "aws"
   s.homepage = "http://www.rubyonrails.org"
 
-  s.add_dependency('actionpack', '= 2.3.5' + PKG_BUILD)
-  s.add_dependency('activerecord', '= 2.3.5' + PKG_BUILD)
+  s.add_dependency('actionpack', '~> 3.0.3' + PKG_BUILD)
+  s.add_dependency('activerecord', '~> 3.0.3' + PKG_BUILD)
 
   s.has_rdoc = true
   s.requirements << 'none'
@@ -102,57 +102,57 @@ end
 
 # Publish beta gem
 desc "Publish the API documentation"
-task :pgem => [:package] do 
+task :pgem => [:package] do
   Rake::SshFilePublisher.new("davidhh@wrath.rubyonrails.org", "public_html/gems/gems", "pkg", "#{PKG_FILE_NAME}.gem").upload
   `ssh davidhh@wrath.rubyonrails.org './gemupdate.sh'`
 end
 
 # Publish documentation
 desc "Publish the API documentation"
-task :pdoc => [:rdoc] do 
+task :pdoc => [:rdoc] do
   Rake::SshDirPublisher.new("davidhh@wrath.rubyonrails.org", "public_html/aws", "doc").upload
 end
 
 
 def each_source_file(*args)
-	prefix, includes, excludes, open_file = args
-	prefix ||= File.dirname(__FILE__)
-	open_file = true if open_file.nil?
-	includes ||= %w[lib\/action_web_service\.rb$ lib\/action_web_service\/.*\.rb$]
-	excludes ||= %w[lib\/action_web_service\/vendor]
-	Find.find(prefix) do |file_name|
-		next if file_name =~ /\.svn/
-		file_name.gsub!(/^\.\//, '')
-		continue = false
-		includes.each do |inc|
-			if file_name.match(/#{inc}/)
-				continue = true
-				break
-			end
-		end
-		next unless continue
-		excludes.each do |exc|
-			if file_name.match(/#{exc}/)
-				continue = false
-				break
-			end
-		end
-		next unless continue
-		if open_file
-			File.open(file_name) do |f|
-				yield file_name, f
-			end
-		else
-			yield file_name
-		end
-	end
+  prefix, includes, excludes, open_file = args
+  prefix ||= File.dirname(__FILE__)
+  open_file = true if open_file.nil?
+  includes ||= %w[lib\/action_web_service\.rb$ lib\/action_web_service\/.*\.rb$]
+  excludes ||= %w[lib\/action_web_service\/vendor]
+  Find.find(prefix) do |file_name|
+    next if file_name =~ /\.svn/
+    file_name.gsub!(/^\.\//, '')
+    continue = false
+    includes.each do |inc|
+      if file_name.match(/#{inc}/)
+        continue = true
+        break
+      end
+    end
+    next unless continue
+    excludes.each do |exc|
+      if file_name.match(/#{exc}/)
+        continue = false
+        break
+      end
+    end
+    next unless continue
+    if open_file
+      File.open(file_name) do |f|
+        yield file_name, f
+      end
+    else
+      yield file_name
+    end
+  end
 end
 
 desc "Count lines of the AWS source code"
 task :lines do
   total_lines = total_loc = 0
   puts "Per File:"
-	each_source_file do |file_name, f|
+  each_source_file do |file_name, f|
     file_lines = file_loc = 0
     while line = f.gets
       file_lines += 1
