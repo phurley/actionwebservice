@@ -55,7 +55,7 @@ require 'action_web_service/scaffolding'
 ActionWebService::Base.send :include, ActionWebService::Container::Direct
 ActionWebService::Base.send :include, ActionWebService::Invocation
 
-ApplicationController.class_eval do
+ActionController::Base.class_eval do
   include ActionWebService::Protocol::Discovery
   include ActionWebService::Protocol::Soap
   include ActionWebService::Protocol::XmlRpc
