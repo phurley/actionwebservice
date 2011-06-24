@@ -31,10 +31,10 @@ begin
   require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'
-  gem 'activesupport', '3.0.1'
-  gem 'actionpack', '3.0.1'
-  gem 'activerecord', '3.0.1'
-  gem 'activesupport', '3.0.1'
+  gem 'activesupport', '~> 3.0'
+  gem 'actionpack', '~> 3.0'
+  gem 'activerecord', '~> 3.0'
+  gem 'activesupport', '~> 3.0'
 end
 
 $:.unshift(File.dirname(__FILE__) + "/action_web_service/vendor/")
